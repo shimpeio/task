@@ -1,0 +1,1 @@
+<p><small>2016 shimpei oto All rights reserved</small></p>
