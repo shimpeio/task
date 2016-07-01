@@ -8,6 +8,11 @@
 	if (isset($_GET['offset']) and !empty($_GET['offset'])) {
 		$offset = $_GET['offset'];
 	}
+
+	$st_count = $db->query("select count(*) as count from posts");
+	$row = $st_count->fetch();
+	$count = $row['count'];
+
 	$stmt = $db->query("select * from posts order by updated desc limit ${limit} offset ${offset}");
 
 	$prev_offset = $offset - $limit;
@@ -36,21 +41,24 @@
 		</div>
 		<div class="manu">
 				<ul>
-					<li class="sub">HOME</li>
-					<li class="sub">CONTENT</li>
-					<li class="sub">ABOUT</li>
-					<li class="sub">NEWS</li>
-					<li class="sub">CONTACT</li>
+					<a href="#"><li class="sub">HOME</li></a>
+					<a href="#"><li class="sub">CONTENT</li></a>
+					<a href="#"><li class="sub">ABOUT</li></a>
+					<a href="#"><li class="sub">NEWS</li></a>
+					<a href="#"><li class="sub">CONTACT</li></a>
 				</ul>
 			</div>
 		  <div id="contents">
 		  	<h2>ARTICLE</h2>
 		  	<a href="new.php">新規記事作成</a>
 		  	<div class="pager">
+		  	<p>総件数: <?php echo $count; ?></p>
 		  	<?php if($offset > 0) : ?>
-		  		<a href="/blog/?offset=<?php echo $prev_offset; ?>"><</a>
+		  		<a href="/blog/?offset=<?php echo $prev_offset; ?>">前へ</a>
 		  	<?php endif; ?>
-		  		<a href="/blog/?offset=<?php echo $next_offset; ?>">></a>
+		  	<?php if ($offset + $limit < $count) : ?>
+		  		<a href="/blog/?offset=<?php echo $next_offset; ?>">次へ</a>
+		  	<?php endif; ?>
 		  	</div>
 		  <?php foreach($stmt as $row) : ?>
 		  	<?php $id = $row['id']; ?>
@@ -61,17 +69,19 @@
 		  		<a href="show.php?id=<?php echo $row['id']; ?>" title="">
 					<?php echo($row['title']); ?>
 				</a>
+				<span><?php echo $row['updated']; ?></span>
+				<a href="edit.php?id=<?php echo $id; ?>">編集</a>
 				<a href="delete.php?id=<?php echo $id; ?>" class="delete">削除</a>
 		  	</article>
 		  <?php endforeach; ?>
 		 </div>
 		 <div class="sidebar">
 		 	<ul>
-		 		<li class="side">新着記事</li>
-		 		<li class="side">ランキング</li>
-		 		<li class="side">お知らせ</li>
-		 		<li class="side">Facebook</li>
-		 		<li class="side">Twitter</li>
+		 		<a href="#"><li class="side">新着記事</li></a>
+		 		<a href="#"><li class="side">ランキング</li></a>
+		 		<a href="#"><li class="side">お知らせ</li></a>
+		 		<a href="#"><li class="side">Facebook</li></a>
+		 		<a href="#"><li class="side">Twitter</li></a>
 		 	</ul>
 		 </div>
 	 </div>

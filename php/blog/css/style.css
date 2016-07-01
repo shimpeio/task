@@ -12,11 +12,12 @@ header, footer, #contents .manu{
 
 .header {
 	height: 100px;
-	background-color: #1e90ff;
+	background-color: #ffffff;
+	border: 3px dotted #1e90ff;
 }
 h1 {
 	/*color: aqua;*/
-	color: white;
+	color: #1e90ff;
 }
 
 h2 {
@@ -48,26 +49,27 @@ ul {
 
 li {
 	list-style: none;
-	background-color: #1e90ff;
-	border: 1px dotted #464646;
+	background-color: #ffffff;
+	border: 2px dotted #1e90ff;
 	text-align: center;
-	color: white;
+	color: #1e90ff;
 }
 
 li.sub { 
 	list-style: none;
-	width: 19.83%;
+	width: 19.66%;
 	height: 50px;
-	background-color: #1e90ff;
+	background-color: #ffffff;
 	float: left;
-	border: 1px dotted #464646;
+	border: 2px dotted #1e90ff;
 	text-align: center;
 	padding-top: 20px;
-	color: white;
+	color: #1e90ff;
 }
 
 .sidebar {
 	float: right;
+	width: 240px;
 }
 
 li.side {
@@ -76,6 +78,11 @@ li.side {
 	padding-top: 10px;
 	clear: both;
 	overflow: hidden;
+}
+
+li:hover {
+	color: #ffffff;
+	background-color: #1e90ff;
 }
 
 #contents {
