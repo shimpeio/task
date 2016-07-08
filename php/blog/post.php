@@ -1,33 +1,26 @@
 <?php require 'utils.php'; ?>
 <?php 
 	$mode = 'new';
-	if (isset($_POST['type']) and $_POST['type'] == 'edit') {
+	if (is_edit($_POST,'type')) {
 		$mode = 'edit';
 		$id = $_POST['id'];
 	}
 
-
-
-	if (!isset($_POST['title']) or !isset($_POST['contents'])) {
-		$error = "タイトルと内容を設定してください";
-	} else if(empty($_POST['title']) or empty($_POST['contents'])) {
-		$error = "タイトルと内容を設定してください";
+	if (is_empty($_POST,'title')){
+		$error = "タイトルを設定してください";
+	} else if (is_empty($_POST,'contents')){
+		$error = '内容を設定してください';
 	} else {
 		$title = $_POST['title'];
 		$contents = $_POST['contents'];
+		$image = $_FILES['image'];
 
 		if ($mode == 'edit') {
-	
-			$sql = "update posts set title = ?, contents = ?, updated = current_timestamp where id = ?";
-			$params = array($title, $contents, $id);
+			update_post($id,$title,$contents,$image);
 		} else {
-	$sql = "insert into posts (title, contents, created, updated)
-		value (?, ?, current_timestamp, current_timestamp)
-	";
-	$params = array($title, $contents);
-	}
-	$st = $db->prepare($sql);
-	$success = $st->execute($params);
+			create_post($title,$contents,$image);
+		}
+	
 	}
 	if (isset($error)) {
 	$page_title = "エラー！！！！！";

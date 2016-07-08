@@ -47,6 +47,7 @@
 	 		 <p><?php echo $post['created']; ?></p>
 	 		 <p><?php echo $post['updated']; ?></p>
 	 		 <p><?php echo $post['contents']; ?></p>
+	 		 <img src="image.php?id=<?php echo $id; ?>"> 
 	 		 <?php } ?>
 	 	</article>
 	 </div>

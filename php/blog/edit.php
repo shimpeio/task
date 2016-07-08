@@ -1,20 +1,14 @@
 edit.php
 <?php require 'utils.php'; ?>
 <?php 
-	if(!isset($_GET['id']) or empty($_GET['id'])) {
+	if(is_empty($_GET,'id')) {
 		$error = "idを指定してください";
-	} else {
-		$id = $_GET['id'];
-		$st = $db->query("select * from posts where id = ${id}");
-		foreach($st as $row) {
-			$post = $row;
-		}
-	}
-	if (isset($error)) {
 		$page_title = "エラー！！！！！！！！！！！！！";
 	} else {
+		$id = $_GET['id'];
+		$post = get_post($id);
 		$page_title = "記事編集";
-	}
+		}
  ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -34,7 +28,7 @@ edit.php
 			<?php elseif(!isset($post)): ?>
 				<P>指定した記事が存在しません</P>
 			<?php else: ?>
-				<form action="post.php" method="post" name="form">
+				<form action="post.php" method="post" name="form" enctype="multipart/form-data">
 					<div>
 						<label for="title">
 							タイトル
@@ -45,6 +39,13 @@ edit.php
 						<label for="contents">
 							内容
 							<textarea name="contents" id="" cols="30" rows="10"><?php echo $post['contents']; ?></textarea>
+						</label>
+					</div>
+					<div>
+						<img src="image.php?id=<?php echo $id ;?>">
+						<label for="image">
+							画像ファイル
+							<input type="file" name="image">
 						</label>
 					</div>
 					<div>

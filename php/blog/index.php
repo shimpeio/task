@@ -1,26 +1,9 @@
 <?php require 'utils.php'; ?>
 <?php
 	$limit = 5;
-	$offset = 0;
-	if (isset($_GET['limit']) and !empty($_GET['limit'])) {
-		$limit = $_GET['limit'];
-	}
-	if (isset($_GET['offset']) and !empty($_GET['offset'])) {
-		$offset = $_GET['offset'];
-	}
-
-	$st_count = $db->query("select count(*) as count from posts");
-	$row = $st_count->fetch();
-	$count = $row['count'];
-
-	$stmt = $db->query("select * from posts order by updated desc limit ${limit} offset ${offset}");
-
-	$prev_offset = $offset - $limit;
-	if ($prev_offset <= 0) {
-		$prev_offset = 0;
-	}
-
-	$next_offset = $offset + $limit;
+	$offset = get_offset();
+	$count = get_posts_count();
+	$stmt = get_db()->query("select * from posts order by updated desc limit ${limit} offset ${offset}");
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -31,8 +14,9 @@
 </head>
 <body>
 	<header>
-		<div class="header">
-			<h1>Blogトップページ</h1>
+		<div class="header"></div>
+		<div class="title">
+			<h1>ペイちゃんハウス</h1>
 		</div>
 	</header>
 	<div class="wrapper">
@@ -54,10 +38,10 @@
 		  	<div class="pager">
 		  	<p>総件数: <?php echo $count; ?></p>
 		  	<?php if($offset > 0) : ?>
-		  		<a href="/blog/?offset=<?php echo $prev_offset; ?>">前へ</a>
+		  		<a href="/blog/?offset=<?php echo get_prev_offset($limit); ?>">前へ</a>
 		  	<?php endif; ?>
 		  	<?php if ($offset + $limit < $count) : ?>
-		  		<a href="/blog/?offset=<?php echo $next_offset; ?>">次へ</a>
+		  		<a href="/blog/?offset=<?php echo get_next_offset($limit); ?>">次へ</a>
 		  	<?php endif; ?>
 		  	</div>
 		  <?php foreach($stmt as $row) : ?>

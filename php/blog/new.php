@@ -8,21 +8,31 @@
 </head>
 <body>
 	<header>
-		<h1>記事新規作成</h1>
+	<div class="header"></div>
+		<div class="title">
+			<h1>新規記事作成</h1>
+		</div>
 	</header>
-	<div id="contents">
+	<div class="new-top"></div>
+	<div id="content">
 		<article>
-			<form action="post.php" method="post" name="form">
+			<form action="post.php" method="post" name="form" enctype="multipart/form-data">
 				<div>
 					<label for="title">
-						タイトル
+						<p class="pei">タイトル</p>
 						<input type="text" name="title">
 					</label>
 				</div>
 				<div>
 					<label for="contents">
-						内容
+						<p class="pei">内容</p>
 						<textarea name="contents" id="" cols="30" rows="10"></textarea>
+					</label>
+				</div>
+				<div>
+					<label for="image">
+						<p class="pei">画像</p>
+						<input type="file" name="image">
 					</label>
 				</div>
 				<div>
